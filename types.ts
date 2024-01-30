@@ -26,6 +26,7 @@ and are an intermediate representation for defining dependencies in multi-item o
 Production requirements always belong to a particular order.
 */
 export type ProductionRequirement = {
+    id: string;
     prerequisites: ProductionRequirement[];
     itemId: string;
 };
