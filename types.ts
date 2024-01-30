@@ -4,6 +4,7 @@ might be attached which alters the production requirements.
 */
 export type OrderItem = {
     id: string;
+    catalogId: string;
 };
 
 /*
@@ -26,6 +27,7 @@ Production requirements always belong to a particular order.
 */
 export type ProductionRequirement = {
     prerequisites: ProductionRequirement[];
+    itemId: string;
 };
 
 /*
