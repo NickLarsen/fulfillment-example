@@ -48,7 +48,7 @@ class ProductionRequirementsRepository implements IProductionRequirementsReposit
         const reqs = template.map(template => ({
             template,
             requirement: {
-                id: uuid.v4() as string,
+                id: uuid.v4(),
                 itemId: item.id,
                 prerequisites: []
             } as ProductionRequirement,
