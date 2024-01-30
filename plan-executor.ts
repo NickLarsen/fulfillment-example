@@ -6,7 +6,7 @@ export interface ITaskExecutor {
 }
 
 export class PlanTaskExecutor implements ITaskExecutor {
-    private readonly eventBus = new EventBus();
+    constructor(private readonly eventBus: EventBus) {}
 
     triggerFollowups(lastTask: ProductionTask): void {
         if (lastTask.status !== 'complete') {

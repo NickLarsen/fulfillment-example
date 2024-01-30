@@ -1,6 +1,7 @@
-import { ITaskExecutor, PlanTaskExecutor } from "./plan-executor";
-import { IProductionPlanner, SingleOrderProductionPlanner } from "./production-planner";
-import { IRequirementsCalculator, SimpleRequirementsCalculator } from "./requirements-calculator";
+import { ILogger } from "./logger";
+import { ITaskExecutor } from "./plan-executor";
+import { IProductionPlanner } from "./production-planner";
+import { IRequirementsCalculator } from "./requirements-calculator";
 import { OrderItem, ProductionOrder } from "./types";
 
 export interface IOrderCommandHandler {
@@ -8,9 +9,12 @@ export interface IOrderCommandHandler {
 }
 
 export class OrderCommandHandler implements IOrderCommandHandler {
-    private readonly requirementsCalculator: IRequirementsCalculator = new SimpleRequirementsCalculator();
-    private readonly planner: IProductionPlanner = new SingleOrderProductionPlanner();
-    private readonly planExecutor: ITaskExecutor = new PlanTaskExecutor();
+    constructor(
+        private readonly logger: ILogger,
+        private readonly requirementsCalculator: IRequirementsCalculator,
+        private readonly planner: IProductionPlanner,
+        private readonly planExecutor: ITaskExecutor
+    ) {}
 
     createOrder(items: OrderItem[]): void {
         this.createOrderNaive(items);
@@ -18,8 +22,16 @@ export class OrderCommandHandler implements IOrderCommandHandler {
 
     private createOrderNaive(items: OrderItem[]): void {
         const order: ProductionOrder = { items };
+        this.logger.log("createOrderNaive", { order });
+        
         const requirements = this.requirementsCalculator.getRequirements(order);
+        this.logger.log("createOrderNaive", { requirements });
+        
         const plan = this.planner.generatePlan(requirements);
-        this.planExecutor.triggerFollowups(plan.getRoot());
+        this.logger.log("createOrderNaive", { plan });
+
+        const planRoot = plan.getRoot();
+        planRoot.status = 'complete';
+        this.planExecutor.triggerFollowups(planRoot);
     }
 }

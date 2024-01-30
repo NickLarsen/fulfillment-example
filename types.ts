@@ -44,6 +44,7 @@ export type ProductionTask = {
     id: string;
     prerequisites: ProductionTask[];
     followUps: ProductionTask[];
+    appliesToRequirements: string[]; // ids of the requirements this applies to
     status: 'pending' | 'in-progress' | 'complete';
     event: string; // this is the event which gets triggered to start the task
 };

@@ -1,3 +1,5 @@
+import { ILogger } from "./logger";
+
 type TaskInfo = { taskId: string };
 type Action = (payload: TaskInfo) => void;
 
@@ -6,6 +8,8 @@ export class EventBus {
     private readonly completeTaskEventName = 'completeTask';
 
     private readonly subscriptions: Record<string, Action[]> = {};
+
+    constructor(private readonly logger: ILogger) {}
 
     subscribeTaskStart(action: Action): void {
         this.subscribe(this.startTaskEventName, action);
@@ -21,6 +25,7 @@ export class EventBus {
         } else {
             this.subscriptions[eventName] = [action];
         }
+        this.logger.log("EventBus.subscribe", { eventName });
     }
 
     startTask(taskId: string) {
@@ -39,5 +44,6 @@ export class EventBus {
                 subscriberAction(payload);
             }
         }, 1);
+        this.logger.log("EventBus.publish", { eventName, payload });
     }
 }
