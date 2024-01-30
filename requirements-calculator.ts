@@ -33,7 +33,8 @@ class ProductionRequirementsRepository implements IProductionRequirementsReposit
             { id: 'impantShipment', prerequisites: ['implantAbutmentFabrication', 'implantCrownFabrication'] },
         ],
         "extraScrew": [
-            { id: 'extraScrewShipment', prerequisites: [] },
+            { id: 'extraScrewFabrication', prerequisites: [] },
+            { id: 'extraScrewShipment', prerequisites: ['extraScrewFabrication'] },
         ],
         "nightguard": [
             { id: 'nightguardDesign', prerequisites: [] },
