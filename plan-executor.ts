@@ -15,7 +15,7 @@ export class PlanTaskExecutor implements ITaskExecutor {
         const nextTasks = lastTask.followUps;
         const unblockedTasks = nextTasks.filter(task => task.prerequisites.every(p => p.status === "complete"));
         for(const task of unblockedTasks) {
-            this.eventBus.startTask(task.id);
+            this.eventBus.publish(task.event, { taskId: task.id });
         }
     }
 }

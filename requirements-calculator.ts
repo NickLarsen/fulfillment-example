@@ -83,7 +83,7 @@ export class SimpleRequirementsCalculator implements IRequirementsCalculator {
     private mergeRequirements(requirementGroups: ProductionRequirement[][]): ProductionRequirement[] {
         // TODO: some kind of interesting logic to know if there are item dependencies
         // this is where we might enforce that design of crown happens before design of nightguard
-        // since requirements relate to exactly one item, merging of requirements doesn't feel like a thing
+        // **since requirements relate to exactly one item, merging of requirements doesn't feel like a thing
         return requirementGroups.flatMap(m => m);
     }
 }

@@ -57,4 +57,5 @@ The plan is an interface which exposes queries for finding specific tasks.
 export interface ProductionPlan {
     findTask(id: string): ProductionTask;
     getRoot(): ProductionTask;
+    getAllTasks(): ProductionTask[];
 }
